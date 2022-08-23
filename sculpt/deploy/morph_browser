@@ -1,0 +1,91 @@
+<config arch="">
+
+	<common_routes>
+		<service name="ROM" label_last="ld.lib.so"> <parent/> </service>
+		<service name="ROM" label_last="init">      <parent/> </service>
+		<service name="CPU">   <parent/> </service>
+		<service name="PD">    <parent/> </service>
+		<service name="LOG">   <parent/> </service>
+		<service name="Timer"> <parent/> </service>
+	</common_routes>
+
+	<start name="fonts_fs" pkg="fonts_fs">
+		<route>
+			<service name="ROM" label="config">
+				<parent label="config -> managed/fonts"/> </service>
+		</route>
+	</start>
+
+	<start name="touch_keyboard" pkg="touch_keyboard">
+		<route>
+			<service name="Gui">   <parent/> </service>
+			<service name="Event"> <parent label="global"/> </service>
+			<service name="File_system" label="fonts">  <child name="fonts_fs"/> </service>
+		</route>
+	</start>
+
+	<start name="system_clock-dummy" pkg="cproc_pinephone/pkg/system_clock-dummy/2022-08-29">
+		<route>
+			<service name="ROM" label_last="dummy_rtc_drv"> <parent label="dummy_rtc_drv"/> </service>
+		</route>
+	</start>
+
+	<start name="black_hole" pkg="black_hole">
+		<config>
+			<audio_in/>
+			<audio_out/>
+			<capture/>
+		</config>
+	</start>
+
+	<start name="gpu_drv" pkg="cnuke/pkg/a64_lima_gpu_drv-pinephone/2022-09-07-a">
+		<route>
+			<service name="Platform"> <parent label="gpu"/> </service>
+		</route>
+	</start>
+
+	<start name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser/2022-08-29">
+		<route>
+			<service name="Nic">
+				<child name="nic_router"/>
+			</service>
+			<service name="File_system" label="config">
+				<child name="ram_fs"/>
+			</service>
+			<service name="File_system" label="downloads">
+				<child name="ram_fs"/>
+			</service>
+			<service name="Gui">
+				<parent label="focus"/>
+			</service>
+			<service name="Report" label="morph_browser -> shape">
+				<parent label="shape"/>
+			</service>
+			<service name="Report" label="clipboard">
+				<parent/>
+			</service>
+			<service name="ROM" label="clipboard">
+				<parent/>
+			</service>
+			<service name="Rtc">
+				<child name="system_clock-dummy"/>
+			</service>
+			<service name="Audio_out">
+				<child name="black_hole"/>
+			</service>
+			<service name="Audio_in">
+				<child name="black_hole"/>
+			</service>
+			<service name="Capture">
+				<child name="black_hole"/>
+			</service>
+			<service name="Gpu">
+				<child name="gpu_drv"/>
+			</service>
+			<service name="ROM" label="mesa_gpu_drv.lib.so">
+				<parent label="mesa_gpu-lima.lib.so"/>
+			</service>
+		</route>
+	</start>
+
+</config>
