@@ -1,6 +1,6 @@
 drivers:      pinephone
 leitzentrale: phone
-nitpicker:    phone
+nitpicker:    morph_browser
 fonts:        phone-720px
 event_filter: phone
 build:        app/phone_manager server/nitpicker app/menu_view server/wm
@@ -11,6 +11,6 @@ import:       pkg/drivers_interactive-pinephone
 import:       src/terminal_crosslink src/a64_usb_host_drv
 import:       raw/pinephone-devices
 import:       src/a64_lima_gpu_drv src/mesa
-deploy:       example
+deploy:       morph_browser
 ram_fs:       depot
 launcher:     sticks_blue_backdrop nano3d system_shell

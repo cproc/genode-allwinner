@@ -1,0 +1,19 @@
+<config focus="rom">
+	<capture/> <event/>
+	<report hover="yes" focus="yes" clicked="yes" keystate="no"/>
+	<background color="#000000"/>
+
+	<domain name="invisible"      layer="1" xpos="10000" />
+	<domain name="leitzentrale"   layer="1" label="no" hover="always" focus="transient" />
+	<domain name="touch_keyboard" layer="2" ypos="960" label="no" hover="always" content="client" focus="transient" />
+	<domain name="default"        layer="3" label="no" hover="always" content="client" focus="transient" width="720" height="960"/>
+	<domain name="morph"          layer="3" label="no" hover="always" content="client" focus="transient" width="720" height="960"/>
+
+	<policy label_prefix="pointer -> "                   domain="invisible"/>
+	<policy label_prefix="leitzentrale -> "              domain="leitzentrale"/>
+	<policy label_prefix="runtime -> touch_keyboard -> " domain="touch_keyboard"/>
+	<policy label_prefix="runtime -> morph_browser -> "  domain="morph"/>
+	<default-policy domain="default"/>
+
+	<global-key name="KEY_DASHBOARD" label="global_keys_handler -> input" />
+</config>
