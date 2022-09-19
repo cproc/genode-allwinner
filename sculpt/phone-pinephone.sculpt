@@ -15,3 +15,4 @@ import:       src/mesa
 deploy:       morph_browser
 launcher:     sticks_blue_backdrop nano3d system_shell
 depot:        nfeske_test cproc_pinephone cnuke
+ram_fs:       depot
