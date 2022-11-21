@@ -18,3 +18,4 @@ launcher:     morph_browser morph_browser-videochat camera
 launcher:     glmark2
 depot:        nfeske cproc cnuke jschlatow
 depot:        nfeske_test cproc_pinephone
+ram_fs:       depot
