@@ -88,7 +88,8 @@
 	</start>
 -->
 
-	<start ram="1350M" name="morph_browser" pkg="morph_browser">
+	<!--<start ram="1350M" name="morph_browser" pkg="morph_browser">-->
+	<start ram="1350M" name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser-jemalloc/2022-11-21-b">
 		<affinity xpos="1" width="2"/>
 		<route>
 			<service name="Nic">
