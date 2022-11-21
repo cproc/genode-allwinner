@@ -17,5 +17,5 @@ deploy:       jitsi
 launcher:     sticks_blue_backdrop direct_nano3d direct_system_shell
 launcher:     touch_keyboard
 launcher:     trace_logger
-
+ram_fs:       depot
 depot:        nfeske_test cproc_pinephone cnuke
