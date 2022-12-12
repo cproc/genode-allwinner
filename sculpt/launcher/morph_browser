@@ -1,4 +1,4 @@
-<launcher ram="1350M" pkg="cproc_pinephone/pkg/morph_browser-jemalloc/2022-12-14">
+<launcher ram="1350M" pkg="cproc_pinephone/pkg/morph_browser-jemalloc/2023-01-20">
 	<affinity xpos="1" width="2"/>
 	<route>
 		<service name="Nic">
