@@ -90,14 +90,45 @@
 	</start>
 -->
 
-	<start ram="1350M" name="morph_browser" pkg="morph_browser">
+	<start name="morph_config_fs" pkg="vfs">
+		<provides> <service name="File_system"/> </provides>
+		<config>
+			<vfs>
+				<dir name="morph-browser">
+					<!--
+						Note: the length of the homepage string must be passed as
+						      hex value right before the string, e.g. \x23 for 35
+						      characters.
+					-->
+					<inline name="morph-browser.conf">
+						[General]
+						autoFitToWidthEnabled=false
+						defaultAudioDevice=
+						defaultVideoDevice=
+						domainWhiteListMode=false
+						homepage=@Variant(\0\0\0\x11\0\0\0\x23https://genode.org/files/pinephone/)
+						incognitoOnStart=false
+						newTabDefaultSection=0
+						restoreSession=true
+						searchEngine=duckduckgo
+						setDesktopMode=false
+						zoomFactor=1.0
+					</inline>
+				</dir>
+				<ram/>
+			</vfs>
+			<default-policy writeable="yes" root="/"/>
+		</config>
+	</start>
+
+	<start ram="1350M" name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser_pinephone-jemalloc/2023-03-09">
 		<affinity xpos="1" width="2"/>
 		<route>
 			<service name="Nic">
 				<child name="nic_router"/>
 			</service>
 			<service name="File_system" label="config">
-				<child name="ram_fs"/>
+				<child name="morph_config_fs"/>
 			</service>
 			<service name="File_system" label="downloads">
 				<child name="ram_fs"/>
