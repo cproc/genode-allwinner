@@ -14,5 +14,7 @@ deploy:       empty
 presets:      empty nano3d system_shell gpu_test osci camera_test
 presets:      morph_browser
 launcher:     screenshot report_dump
+launcher:     morph_browser morph_browser-videochat camera
+launcher:     glmark2
 depot:        nfeske cproc cnuke jschlatow
 depot:        nfeske_test cproc_pinephone
