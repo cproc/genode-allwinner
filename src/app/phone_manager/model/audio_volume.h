@@ -12,10 +12,10 @@
  */
 
 #ifndef _MODEL__AUDIO_VOLUME_H_
-#define _MODEL__AUDIO_VOLUME_H__H_
+#define _MODEL__AUDIO_VOLUME_H_
 
 #include <types.h>
 
 namespace Sculpt { struct Audio_volume { unsigned value; }; }
 
-#endif /* _MODEL__AUDIO_VOLUME_H__H_ */
+#endif /* _MODEL__AUDIO_VOLUME_H_ */
