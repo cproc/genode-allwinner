@@ -18,8 +18,8 @@ proc run_image { } {
 	# Build uImage
 	#
 
-	set bin_img   [run_dir]/image.bin
-	set uboot_img [run_dir]/ext2/uImage
+	set bin_img   [file join [run_dir] boot image.bin]
+	set uboot_img [file join [run_dir] ext2 boot uImage]
 	set entrypoint [exec [cross_dev_prefix]readelf -h $elf_img | \
 	                grep "Entry point address: " | \
 	                sed -e "s/.*Entry point address: *//"]
@@ -43,7 +43,7 @@ proc run_image { } {
 
 	set image_load_addr [get_cmd_arg --image-load-address "0x42000000"]
 
-	exec echo "bootcmd=ext2load mmc 0:1 $image_load_addr /uImage; bootm $image_load_addr\n" \
+	exec echo "bootcmd=ext2load mmc 0:1 $image_load_addr /boot/uImage; bootm $image_load_addr\n" \
 	          "bootdelay=0" \
 	   | $mkenvimage -s 0x20000 -o [file join [run_dir] ext2 boot uboot.env] -
 
