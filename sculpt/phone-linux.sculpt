@@ -5,7 +5,7 @@ fonts:        phone
 event_filter: phone_linux
 build:        app/phone_manager server/nitpicker app/menu_view server/wm
 build:        server/event_filter
-build:        app/dummy_modem
+build:        app/dummy_modem app/depot_query
 import:       pkg/drivers_interactive-linux
 deploy:       example
 ram_fs:       depot
