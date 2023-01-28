@@ -10,4 +10,4 @@ import:       pkg/drivers_interactive-linux
 deploy:       example
 presets:      nano3d system_shell
 ram_fs:       depot
-launcher:     sticks_blue_backdrop direct_nano3d direct_system_shell
+launcher:     sticks_blue_backdrop direct_nano3d direct_system_shell touch_keyboard
