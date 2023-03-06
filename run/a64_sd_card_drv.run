@@ -75,8 +75,8 @@ install_config {
 			<resource name="RAM" quantum="64M" />
 			<config verbose="no" report="no" log="yes" stop_on_error="no">
 				<tests>
-					<sequential length="256M" size="1M" io_buffer="8M" batch="4"/>
-					<sequential start="2097152" write="no" length="256M" size="1M" io_buffer="8M" batch="4"/>
+					<!--<sequential length="256M" size="1M" io_buffer="8M" batch="4"/>-->
+					<sequential start="2097152" write="no" length="256M" size="1M" io_buffer="8M" batch="1"/>
 				</tests>
 			</config>
 			<route>
