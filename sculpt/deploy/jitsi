@@ -1,4 +1,4 @@
-<config arch="" info="Chromium-based Morph web browser">
+<config arch="" info="Video chat via Jitsi">
 
 	<common_routes>
 		<service name="ROM" label_last="ld.lib.so"> <parent/> </service>
@@ -73,8 +73,14 @@
 		</route>
 	</start>
 
-	<start name="black_hole" pkg="black_hole">
-		<config> <audio_in/> <audio_out/> <capture/> <report/> </config>
+	<start name="camera" pkg="camera-pinephone">
+		<affinity xpos="3" width="1"/>
+		<route>
+			<service name="Timer">       <parent/> </service>
+			<service name="Platform">    <parent label="camera"/> </service>
+			<service name="Pin_state">   <parent/> </service>
+			<service name="Pin_control"> <parent/> </service>
+		</route>
 	</start>
 
 	<start name="touch_keyboard" pkg="touch_keyboard">
@@ -105,13 +111,13 @@
 						defaultAudioDevice=
 						defaultVideoDevice=
 						domainWhiteListMode=false
-						homepage=@Variant(\0\0\0\x11\0\0\0\x23https://genode.org/files/pinephone/)
+						homepage=@Variant(\0\0\0\x11\0\0\0\x13https://meet.jit.si)
 						incognitoOnStart=false
 						newTabDefaultSection=0
 						restoreSession=true
 						searchEngine=duckduckgo
 						setDesktopMode=false
-						zoomFactor=1.0
+						zoomFactor=1.5
 					</inline>
 				</dir>
 				<ram/>
@@ -151,10 +157,10 @@
 				<child name="audio_drv"/>
 			</service>
 			<service name="Audio_in">
-				<child name="black_hole"/>
+				<child name="audio_drv"/>
 			</service>
 			<service name="Capture">
-				<child name="black_hole"/>
+				<child name="camera"/>
 			</service>
 			<service name="Gpu">
 				<child name="gpu_drv"/>
