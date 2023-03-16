@@ -108,7 +108,7 @@
 		<route> <service name="RM"> <parent/> </service> </route>
 	</start>
 
-	<start name="morph_config_fs" pkg="vfs">
+	<start name="jitsi_config_fs" pkg="vfs">
 		<provides> <service name="File_system"/> </provides>
 		<config>
 			<vfs>
@@ -146,7 +146,7 @@
 				<child name="nic_router"/>
 			</service>
 			<service name="File_system" label="config">
-				<child name="morph_config_fs"/>
+				<child name="jitsi_config_fs"/>
 			</service>
 			<service name="File_system" label="downloads">
 				<child name="ram_fs"/>
