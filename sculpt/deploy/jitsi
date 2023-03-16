@@ -9,6 +9,7 @@
 		<service name="Timer"> <parent/> </service>
 	</common_routes>
 
+<!--
 	<start ram="16M" name="log_terminal" pkg="terminal">
 		<config>
 			<initial width="720" initial_height="960"/>
@@ -44,7 +45,7 @@
 			<service name="Terminal"> <child name="log_terminal"/> </service>
 		</route>
 	</start>
-
+-->
 	<start name="fonts_fs" pkg="fonts_fs">
 		<route>
 			<service name="ROM" label="config">
@@ -58,13 +59,26 @@
 		</route>
 	</start>
 
+	<start name="black_hole" pkg="black_hole">
+		<config>
+			<audio_in/>
+			<audio_out/>
+			<capture/>
+			<report/>
+			<gpu/>
+		</config>
+	</start>
+
+<!--
 	<start name="gpu_drv" version="morph" caps="2000" pkg="a64_lima_gpu_drv-pinephone">
-		<affinity xpos="0" width="1"/>
+		<affinity xpos="2" width="1"/>
 		<route>
 			<service name="Platform"> <parent label="gpu"/> </service>
 		</route>
 	</start>
+-->
 
+<!--
 	<start name="audio_drv" pkg="a64_audio_drv" priority="0" cpu="40">
 		<resource name="CPU" quantum="40"/>
 		<affinity xpos="0" ypos="0" width="1" height="1"/>
@@ -72,7 +86,9 @@
 			<service name="Platform"> <parent label="audio_drv"/> </service>
 		</route>
 	</start>
+-->
 
+<!--
 	<start name="video_bridge" pkg="nitpicker">
 		<config request_framebuffer="no">
 			<capture/>
@@ -95,6 +111,44 @@
 			<service name="Gui">         <child name="video_bridge"/> </service>
 		</route>
 	</start>
+-->
+
+	<start name="mmcblk0.part_block" pkg="part_block">
+		<affinity xpos="3" width="1"/>
+		<route>
+			<service name="Block">
+				<parent label="sd_card_drv"/>
+			</service>
+			<service name="Report" label="partitions">
+				<parent/>
+			</service>
+		</route>
+	</start>
+
+	<start name="mmcblk0.1.fs" pkg="ext2_fs">
+		<affinity xpos="3" width="1"/>
+		<route>
+			<service name="Block"> <child name="mmcblk0.part_block" label="1"/> </service>
+			<service name="RM"> <parent/> </service>
+		</route>
+	</start>
+
+	<start ram="1024M" name="trace_recorder" pkg="trace_recorder">
+	<!--<start ram="950M" name="trace_recorder" pkg="trace_recorder">-->
+		<affinity xpos="3" width="1"/>
+		<config period_ms="10000" enable="yes">
+			<vfs> <fs/> </vfs>
+			<policy label_suffix="morph-browser" policy="ctf0" buffer="16M">
+				<ctf/>
+			</policy>
+		</config>
+		<route>
+			<service name="RM"> <parent/> </service>
+			<service name="TRACE"> <parent/> </service>
+			<service name="Rtc"> <child name="sntp_dummy_rtc"/> </service>
+			<service name="File_system"> <child name="mmcblk0.1.fs"/> </service>
+		</route>
+	</start>
 
 	<start name="touch_keyboard" pkg="touch_keyboard">
 		<route>
@@ -108,16 +162,22 @@
 		<route> <service name="RM"> <parent/> </service> </route>
 	</start>
 
+	<start name="mesa_gpu-cpu" pkg="mesa_gpu-cpu">
+		<route>
+			<service name="RM"> <parent/> </service>
+		</route>
+	</start>
+<!--
 	<start name="jitsi_config_fs" pkg="vfs">
 		<provides> <service name="File_system"/> </provides>
 		<config>
 			<vfs>
 				<dir name="morph-browser">
-					<!--
+					<!- -
 						Note: the length of the homepage string must be passed as
 						      hex value right before the string, e.g. \x23 for 35
 						      characters.
-					-->
+					- ->
 					<inline name="morph-browser.conf">
 						[General]
 						autoFitToWidthEnabled=false
@@ -138,15 +198,21 @@
 			<default-policy writeable="yes" root="/"/>
 		</config>
 	</start>
-
-	<start ram="1350M" name="jitsi_browser" pkg="cproc/pkg/morph_browser_pinephone-jemalloc/2023-03-27">
+-->
+	<start ram="700M" name="morph_browser" pkg="morph_browser-software">
+	<!--<start ram="700M" name="morph_browser" pkg="cproc_test/pkg/morph_browser-jemalloc-software/dummy">-->
+	<!--<start ram="750M" name="morph_browser" pkg="cproc_test/pkg/morph_browser-jemalloc-software/2023-03-17">-->
+	<!--<start ram="700M" name="morph_browser" pkg="morph_browser_pinephone">-->
+	<!--<start ram="1350M" name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser/2022-12-05-a">-->
+	<!--<start ram="1350M" name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser-jemalloc/2022-12-12">-->
+	<!--<start ram="1350M" name="morph_browser" pkg="cproc_pinephone/pkg/falkon-jemalloc/2022-11-22-a">-->
 		<affinity xpos="1" width="2"/>
 		<route>
 			<service name="Nic">
 				<child name="nic_router"/>
 			</service>
 			<service name="File_system" label="config">
-				<child name="jitsi_config_fs"/>
+				<child name="ram_fs"/>
 			</service>
 			<service name="File_system" label="downloads">
 				<child name="ram_fs"/>
@@ -167,19 +233,19 @@
 				<child name="sntp_dummy_rtc"/>
 			</service>
 			<service name="Audio_out">
-				<child name="audio_drv"/>
+				<child name="black_hole"/>
 			</service>
 			<service name="Audio_in">
-				<child name="audio_drv"/>
+				<child name="black_hole"/>
 			</service>
 			<service name="Capture">
-				<child name="video_bridge"/>
+				<child name="black_hole"/>
 			</service>
 			<service name="Gpu">
-				<child name="gpu_drv"/>
+				<child name="black_hole"/>
 			</service>
 			<service name="ROM" label="mesa_gpu_drv.lib.so">
-				<child name="mesa_gpu-lima"/>
+				<child name="mesa_gpu-cpu"/>
 			</service>
 		</route>
 	</start>
