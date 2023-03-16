@@ -73,13 +73,26 @@
 		</route>
 	</start>
 
+	<start name="video_bridge" pkg="nitpicker">
+		<config request_framebuffer="no">
+			<capture/>
+			<domain name="" xpos="80" ypos="-80" layer="1" content="client" label="no" />
+			<default-policy domain=""/>
+		</config>
+		<route>
+			<service name="Report"> <parent/> </service>
+		</route>
+	</start>
+
 	<start name="camera" pkg="camera-pinephone">
 		<affinity xpos="3" width="1"/>
+		<config width="640" height="480" fps="15" format="yuv" camera="front"/>
 		<route>
 			<service name="Timer">       <parent/> </service>
 			<service name="Platform">    <parent label="camera"/> </service>
 			<service name="Pin_state">   <parent/> </service>
 			<service name="Pin_control"> <parent/> </service>
+			<service name="Gui">         <child name="video_bridge"/> </service>
 		</route>
 	</start>
 
@@ -160,7 +173,7 @@
 				<child name="audio_drv"/>
 			</service>
 			<service name="Capture">
-				<child name="camera"/>
+				<child name="video_bridge"/>
 			</service>
 			<service name="Gpu">
 				<child name="gpu_drv"/>
