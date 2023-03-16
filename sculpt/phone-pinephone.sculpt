@@ -19,3 +19,4 @@ presets:      morph_browser jitsi goa_testbed linphone
 launcher:     screenshot report_dump system_clock-dummy
 depot:        genodelabs cnuke alex-ab mstein nfeske cproc chelmuth jschlatow
 depot:        ssumpf skalk
+ram_fs:       depot
