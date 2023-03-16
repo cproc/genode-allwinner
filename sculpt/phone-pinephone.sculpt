@@ -17,3 +17,4 @@ presets:      morph_browser jitsi
 launcher:     screenshot report_dump
 depot:        nfeske cproc cnuke jschlatow
 depot:        nfeske_test cproc_pinephone
+ram_fs:       depot
