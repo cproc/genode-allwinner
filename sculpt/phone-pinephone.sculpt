@@ -18,5 +18,5 @@ presets:      morph_browser jitsi
 launcher:     screenshot report_dump system_clock-dummy
 depot:        genodelabs cnuke alex-ab mstein nfeske cproc chelmuth jschlatow
 depot:        ssumpf skalk
-depot:        nfeske_test
+depot:        nfeske_test cproc_pinephone
 ram_fs:       depot
