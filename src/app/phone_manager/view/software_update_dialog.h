@@ -88,6 +88,7 @@ struct Sculpt::Software_update_dialog
 	                       File_operation_queue const &file_operation_queue,
 	                       Depot_users          const &depot_users,
 	                       Image_index          const &image_index,
+	                       Depot_users_dialog::Action &depot_users_action,
 	                       Action &action)
 	:
 		_build_info(build_info),
@@ -96,7 +97,7 @@ struct Sculpt::Software_update_dialog
 		_file_operation_queue(file_operation_queue),
 		_image_index(image_index),
 		_action(action),
-		_users(depot_users, _build_info.depot_user)
+		_users(depot_users, _build_info.depot_user, depot_users_action)
 	{ }
 
 	static void _gen_vspacer(Xml_generator &xml, char const *name)
@@ -318,10 +319,13 @@ struct Sculpt::Software_update_dialog
 
 	bool hovered() const { return _users.hovered();  }
 
+	bool keyboard_needed() const { return _users.keyboard_needed(); }
+
 	void click()
 	{
-		_users.click([&] (User const &selected_user) {
-			_action.query_image_index(selected_user); });
+		if (_users.hovered())
+			_users.click([&] (User const &selected_user) {
+				_action.query_image_index(selected_user); });
 
 		if (_check.hovered("check") && !_index_update_in_progress())
 			_action.update_image_index(_users.selected());
@@ -339,6 +343,8 @@ struct Sculpt::Software_update_dialog
 	}
 
 	void clack() { }
+
+	void handle_key(Codepoint c) { _users.handle_key(c); }
 };
 
 #endif /* _VIEW__SOFTWARE_UPDATE_DIALOG_H_ */
