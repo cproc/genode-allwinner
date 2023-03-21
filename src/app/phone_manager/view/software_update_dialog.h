@@ -27,7 +27,7 @@ struct Sculpt::Software_update_dialog
 	using Depot_users = Depot_users_dialog::Depot_users;
 	using User        = Depot_users_dialog::User;
 	using Image_index = Attached_rom_dataspace;
-	using Url         = String<128>;
+	using Url         = Depot_users_dialog::Url;
 	using Version     = String<16>;
 
 	Build_info const _build_info;
@@ -273,6 +273,9 @@ struct Sculpt::Software_update_dialog
 				_users.generate(xml);
 
 				if (_users.unfolded())
+					return;
+
+				if (!_users.selected_user_has_download_url())
 					return;
 
 				_gen_vspacer(xml, "spacer1");

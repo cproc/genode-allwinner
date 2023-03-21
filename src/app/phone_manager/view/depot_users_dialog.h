@@ -118,12 +118,14 @@ struct Sculpt::Depot_users_dialog
 		{
 			User const name     = user.attribute_value("name", User());
 			bool const selected = (name == _selected);
+			Url  const url      = _url(user);
+			Url  const label    = Depot_url::from_string(url).valid() ? url : Url(name);
 
 			if (!selected && !_unfolded)
 				return;
 
 			_gen_item(xml, name,
-				[&] /* label */ { xml.attribute("text", Path(" ", _url(user))); },
+				[&] /* label */ { xml.attribute("text", Path(" ", label)); },
 				[&] /* right */ { }
 			);
 
@@ -220,6 +222,16 @@ struct Sculpt::Depot_users_dialog
 
 		bool unfolded() const { return _unfolded; }
 
+		bool selected_user_has_download_url() const
+		{
+			bool result = false;
+			_depot_users.xml().for_each_sub_node([&] (Xml_node const &user) {
+				if (_selected == user.attribute_value("name", User()))
+					if (Depot_url::from_string(_url(user)).valid())
+						result = true; });
+			return result;
+		}
+
 		template <typename SELECT_FN>
 		void click(SELECT_FN const &select_fn)
 		{
@@ -233,8 +245,8 @@ struct Sculpt::Depot_users_dialog
 
 			auto select_depot_user = [&] (User const &user)
 			{
-				select_fn(user);
 				_selected = user;
+				select_fn(user);
 				_unfolded = false;
 				_url_edit_field = _orig_edit_url;
 			};
