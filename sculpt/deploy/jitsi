@@ -157,11 +157,11 @@
 			<service name="File_system" label="fonts"> <child name="fonts_fs"/> </service>
 		</route>
 	</start>
-
+<!--
 	<start name="mesa_gpu-lima" pkg="mesa_gpu-lima">
 		<route> <service name="RM"> <parent/> </service> </route>
 	</start>
-
+-->
 	<start name="mesa_gpu-cpu" pkg="mesa_gpu-cpu">
 		<route>
 			<service name="RM"> <parent/> </service>
@@ -199,8 +199,8 @@
 		</config>
 	</start>
 -->
-	<start ram="700M" name="morph_browser" pkg="morph_browser-software">
-	<!--<start ram="700M" name="morph_browser" pkg="cproc_test/pkg/morph_browser-jemalloc-software/dummy">-->
+	<!--<start ram="700M" name="morph_browser" pkg="morph_browser-software">-->
+	<start ram="700M" name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser-jemalloc-software/dummy">
 	<!--<start ram="750M" name="morph_browser" pkg="cproc_test/pkg/morph_browser-jemalloc-software/2023-03-17">-->
 	<!--<start ram="700M" name="morph_browser" pkg="morph_browser_pinephone">-->
 	<!--<start ram="1350M" name="morph_browser" pkg="cproc_pinephone/pkg/morph_browser/2022-12-05-a">-->
