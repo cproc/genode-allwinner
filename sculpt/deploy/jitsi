@@ -10,7 +10,7 @@
 		<service name="Timer"> <parent/> </service>
 	</common_routes>
 
-	<start ram="16M" name="log_terminal" pkg="terminal">
+	<start ram="16M" caps="120" name="log_terminal" pkg="terminal">
 		<config>
 			<initial width="720" initial_height="960"/>
 			<palette>
@@ -164,7 +164,7 @@
 		</config>
 	</start>
 
-	<start ram="1350M" name="jitsi_browser" pkg="cproc/pkg/morph_browser_pinephone-jemalloc/2025-04-16">
+	<start ram="1350M" name="jitsi_browser" pkg="cproc/pkg/morph_browser_pinephone-jemalloc/2025-10-21">
 		<affinity xpos="1" width="2"/>
 		<route>
 			<service name="Nic">
